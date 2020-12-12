@@ -3,12 +3,12 @@
 declare -a php_versions
 
 version=$(php -v | grep -o -e "PHP [0-9+]\.[0-9+]" | cut -d " " -f2)
-php_versions=($(brew ls --versions | grep -e "^php" | cut -d " " -f2 | grep -o -e "[0-9+]\.[0-9+]" | xargs))
+php_versions=($(brew ls --versions | egrep "^php(\ |@)" | cut -d " " -f2 | grep -o -e "[0-9+]\.[0-9+]" | xargs))
 
 if [ -z "$1" ]; then
   php_versions=$(printf ", %s" "${php_versions[@]}")
 
-  echo "Usage: $0 <version>"
+  echo "Usage: $(basename $0) <version>"
   echo "PHP Versions: ${php_versions:2}"
   exit 0
 fi
